@@ -28,11 +28,12 @@
 #include <QDBusMetaType>
 
 #include <QtGlobal>
-#include <timed-qt5/qmacro.h>
+#include "../lib/qmacro.h"
 
 namespace Maemo { namespace Timed { namespace Voland { class Reminder ; } } }
 
-declare_qtdbus_io(Maemo::Timed::Voland::Reminder) ;
+QDBusArgument &operator<<(QDBusArgument &out, const Maemo::Timed::Voland::Reminder &x) ;
+const QDBusArgument &operator>>(const QDBusArgument &in, Maemo::Timed::Voland::Reminder &x) ;
 
 namespace Maemo
 {
@@ -43,7 +44,6 @@ namespace Maemo
       class Reminder
       {
         struct reminder_pimple_t *p ;
-        declare_qtdbus_io_friends(Reminder) ;
       public:
         Reminder() ;
         Reminder(reminder_pimple_t *) ;
@@ -59,9 +59,12 @@ namespace Maemo
         bool isMissed() const ;
         QString buttonAttr(int x, const QString &key) const ;
        ~Reminder() ;
+
+        declare_qtdbus_io_friends(Reminder) ;
       } ;
     }
   }
 }
+Q_DECLARE_METATYPE(Maemo::Timed::Voland::Reminder)
 
 #endif

@@ -39,12 +39,11 @@ inline QString Maemo::Timed::c2q(const char *c)
   return QString::fromLatin1(c) ;
 }
 
-#define declare_qtdbus_io(type_name) \
+/*#define declare_qtdbus_io(type_name) \
   QDBusArgument &operator<<(QDBusArgument &out, const type_name &x) ; \
-  const QDBusArgument &operator>>(const QDBusArgument &in, type_name &x) ; \
-  Q_DECLARE_METATYPE(type_name)
+  const QDBusArgument &operator>>(const QDBusArgument &in, type_name &x) ;*/
 
-#define declare_qtdbus_io_friends(type_name) \
+#define declare_qtdbus_io_friends(type_name); \
   friend QDBusArgument & ::operator<<(QDBusArgument &, const type_name &) ; \
   friend const QDBusArgument & ::operator>>(const QDBusArgument &in, type_name &x) ;
 

@@ -325,7 +325,8 @@ private:
   QVariant dbus_output() const ;
 } ;
 
-declare_qtdbus_io(Maemo::Timed::Event::Triggers);
+QDBusArgument &operator<<(QDBusArgument &out, const Maemo::Timed::Event::Triggers &x) ;
+const QDBusArgument &operator>>(const QDBusArgument &in, Maemo::Timed::Event::Triggers &x) ;
 
 class Maemo::Timed::Event::Triggers : public QMap<quint32, quint32>
 {
@@ -334,6 +335,8 @@ public:
   {
   }
 };
+
+Q_DECLARE_METATYPE(Maemo::Timed::Event::Triggers)
 
 #if NOT_DONE_YET
 void foo()

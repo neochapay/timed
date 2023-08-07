@@ -47,11 +47,11 @@ namespace Maemo
   }
 }
 
-declare_qtdbus_io(Maemo::Timed::WallClock::Info) ;
+QDBusArgument &operator<<(QDBusArgument &out, const Maemo::Timed::WallClock::Info &x) ;
+const QDBusArgument &operator>>(const QDBusArgument &in, Maemo::Timed::WallClock::Info &x) ;
 
 class Maemo::Timed::WallClock::Info
 {
-  declare_qtdbus_io_friends(Info) ;
   struct wall_info_pimple_t *p ;
 public:
   Info() ;
@@ -90,7 +90,10 @@ public:
   QString defaultTimezone() const ;
 
   QString str() const ;
+  declare_qtdbus_io_friends(Info);
 } ;
+
+ Q_DECLARE_METATYPE(Maemo::Timed::WallClock::Info)
 
 // struct wall_settings_pimple_t ;
 

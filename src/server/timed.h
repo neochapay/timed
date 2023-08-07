@@ -31,8 +31,13 @@
 #include <QDBusConnectionInterface>
 #include <QDBusServiceWatcher>
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <iodata-qt6/validator>
+#include <iodata-qt6/storage>
+#else
 #include <iodata-qt5/validator>
 #include <iodata-qt5/storage>
+#endif
 
 #include "wrappers.h"
 #include "settings.h"
@@ -55,15 +60,19 @@ class csd_t;
 struct Timed : public QCoreApplication
 {
 public:
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+  inline const char *configuration_path() { return  "/etc/timed-qt6.rc" ; }
+#else
   inline const char *configuration_path() { return  "/etc/timed-qt5.rc" ; }
-  // inline const char *configuration_type() { return  "/usr/share/timed/typeinfo/config.type" ; }
+#endif
+  inline const char *configuration_type() { return  "/usr/share/timed/typeinfo/config.type" ; }
 
   inline const char *customization_path() { return  "/usr/share/timed/customization.data" ; } // TODO: make it configurable
-  // inline const char *customization_type() { return  "/usr/share/timed/typeinfo/customization.type" ; }
+  inline const char *customization_type() { return  "/usr/share/timed/typeinfo/customization.type" ; }
 
-  // inline const char *settings_file_type() { return  "/usr/share/timed/typeinfo/settings.type" ; }
+  inline const char *settings_file_type() { return  "/usr/share/timed/typeinfo/settings.type" ; }
 
-  // inline const char *event_queue_type() { return  "/usr/share/timed/typeinfo/queue.type" ; }
+  inline const char *event_queue_type() { return  "/usr/share/timed/typeinfo/queue.type" ; }
 
 private:
   bool format24_by_default ;

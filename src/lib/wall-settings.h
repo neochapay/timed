@@ -47,6 +47,9 @@ struct Maemo::Timed::WallClock::wall_settings_pimple_t
   QString str() const ;
 } ;
 
-declare_qtdbus_io(Maemo::Timed::WallClock::wall_settings_pimple_t) ;
+QDBusArgument &operator<<(QDBusArgument &out, const Maemo::Timed::WallClock::wall_settings_pimple_t &x) ;
+const QDBusArgument &operator>>(const QDBusArgument &in, Maemo::Timed::WallClock::wall_settings_pimple_t &x) ;
+
+Q_DECLARE_METATYPE(Maemo::Timed::WallClock::wall_settings_pimple_t)
 
 #endif

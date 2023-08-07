@@ -39,11 +39,6 @@
 
 #include "../voland/interface.h"
 
-#include "queue.type.h"
-#include "config.type.h"
-#include "customization.type.h"
-#include "settings.type.h"
-
 #if HAVE_DSME
 #include "interfaces.h"
 #endif
@@ -251,7 +246,7 @@ void Timed::init_configuration()
   const char *input_path = configuration_path();
   iodata::storage *config_storage = new iodata::storage ;
   config_storage->set_primary_path(input_path) ;
-  config_storage->set_validator(etc_timed_rc_validator(), "config_t") ;
+  config_storage->set_validator(configuration_type(), "config_t") ;
 
   /* Because config_storage->load() also sets up the default values, we
    * must call it even if we know that the input file is not present ... */
@@ -319,7 +314,7 @@ void Timed::init_customization()
   const char *input_path = customization_path();
   iodata::storage *storage = new iodata::storage ;
   storage->set_primary_path(input_path) ;
-  storage->set_validator(customization_data_validator(), "customization_t") ;
+  storage->set_validator(configuration_type(), "customization_t") ;
 
   /* Because config_storage->load() also sets up the default values, we
    * must call it even if we know that the input file is not present ... */
@@ -433,7 +428,7 @@ void Timed::init_read_settings()
   shared_settings_storage = new iodata::storage;
   shared_settings_storage->set_primary_path(shared_settings_path.toStdString());
   shared_settings_storage->set_secondary_path(shared_settings_path.toStdString() + ".bak");
-  shared_settings_storage->set_validator(settings_data_validator(), "settings_t");
+  shared_settings_storage->set_validator(settings_file_type(), "settings_t");
 
   /* If possible, read shared settings file */
   if (access(qUtf8Printable(shared_settings_path), R_OK) == 0
@@ -451,7 +446,7 @@ void Timed::init_read_settings()
     /* Private data has been migrated / is otherwise unreadable */
     private_settings_storage->set_primary_path("/dev/null");
   }
-  private_settings_storage->set_validator(settings_data_validator(), "settings_t");
+  private_settings_storage->set_validator(settings_file_type(), "settings_t");
 
   /* If reading shared settings file failed, read private / dummy data */
   if (!tree) {
@@ -571,7 +566,7 @@ void Timed::init_load_events()
   shared_event_storage = new iodata::storage;
   shared_event_storage->set_primary_path(shared_events_path.toStdString());
   shared_event_storage->set_secondary_path(shared_events_path.toStdString() + ".bak");
-  shared_event_storage->set_validator(events_data_validator(), "event_queue_t");
+  shared_event_storage->set_validator(event_queue_type(), "event_queue_t");
 
   if (permissions_shared_events()) {
     iodata::record *events = shared_event_storage->load();
@@ -584,7 +579,7 @@ void Timed::init_load_events()
   private_event_storage = new iodata::storage;
   private_event_storage->set_primary_path(private_events_path.toStdString());
   private_event_storage->set_secondary_path(private_events_path.toStdString() + ".bak");
-  private_event_storage->set_validator(events_data_validator(), "event_queue_t");
+  private_event_storage->set_validator(event_queue_type(), "event_queue_t");
 
   if (permissions_private_events()) {
     iodata::record *events = private_event_storage->load();

@@ -33,13 +33,17 @@
 #include "ofonomodemmanager.h"
 #include "ofonoconstants.h"
 
+//#include "../lib/event-io.h"
+
 struct OfonoModemProperties
 {
     QDBusObjectPath name;
     QMap<QString, QVariant> dict;
 };
+Q_DECLARE_METATYPE(OfonoModemProperties)
 
 typedef QList<OfonoModemProperties> OfonoModemList;
+Q_DECLARE_METATYPE(OfonoModemList)
 
 QDBusArgument &operator<<(QDBusArgument &argument, const OfonoModemProperties &modemProperties)
 {
@@ -57,15 +61,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, OfonoModemPropert
     return argument;
 }
 
-Q_DECLARE_METATYPE(OfonoModemProperties)
-Q_DECLARE_METATYPE(OfonoModemList)
-
 OfonoModemManager::OfonoModemManager(QObject *parent) :
     QObject(parent)
 {
-    qDBusRegisterMetaType<OfonoModemProperties>();
-    qDBusRegisterMetaType<OfonoModemList>();
-
     QDBusConnection::systemBus().connect(OfonoConstants::OFONO_SERVICE,
                                          OfonoConstants::OFONO_MANAGER_PATH,
                                          OfonoConstants::OFONO_MANAGER_INTERFACE, "ModemAdded",

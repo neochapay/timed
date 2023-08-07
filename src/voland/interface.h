@@ -33,7 +33,11 @@
 #include <QDBusConnection>
 
 #include <QtGlobal>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <timed-qt6/qmacro.h>
+#else
 #include <timed-qt5/qmacro.h>
+#endif
 
 #include "reminder.h"
 

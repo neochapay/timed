@@ -115,6 +115,7 @@ QTextStream& operator<<(QTextStream &os, const QVector<T> &x)
   return os ;
 }
 
-declare_qtdbus_io (nanotime_t) ;
+QDBusArgument &operator<<(QDBusArgument &out, const nanotime_t &x) ;
+const QDBusArgument &operator>>(const QDBusArgument &in, nanotime_t &x) ;
 
 #endif

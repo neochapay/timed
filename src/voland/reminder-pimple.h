@@ -57,6 +57,9 @@ namespace Maemo
   }
 }
 
-declare_qtdbus_io(Maemo::Timed::Voland::button_io_t) ;
+QDBusArgument &operator<<(QDBusArgument &out, const Maemo::Timed::Voland::button_io_t &x) ;
+const QDBusArgument &operator>>(const QDBusArgument &in, Maemo::Timed::Voland::button_io_t &x) ;
+
+Q_DECLARE_METATYPE(Maemo::Timed::Voland::button_io_t)
 
 #endif
